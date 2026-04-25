@@ -122,18 +122,14 @@ async def health():
 async def pipeline_run(
     image: UploadFile = File(...),
     noise_profile: str = Form("none"),
-    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
     t0 = time.perf_counter()
     image_bytes = await image.read()
 
-    saved_path = _save_image(current_user.id, image_bytes, image.filename or "upload.bin")
-
     run = PipelineRun(
-        user_id=current_user.id,
+        user_id=1,
         image_filename=image.filename,
-        image_path=str(saved_path),
         noise_profile=noise_profile,
     )
     db.add(run)
