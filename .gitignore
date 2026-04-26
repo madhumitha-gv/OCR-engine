@@ -77,3 +77,5 @@ orchestrator/uploads/
 
 # Model weights (large binary — store separately or via Git LFS)
 *.pth
+git-lfs-3.4.1/
+git-lfs.zip
