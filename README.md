@@ -1,4 +1,4 @@
-# CodeNova — 2-Stage Neural OCR + Compression Pipeline
+# Neural OCR + Compression Pipeline
 
 **IU Hackathon 2026** — A full-stack pipeline that ingests a noisy scanned document, extracts its text using a custom-trained CNN, and compresses the output using a hand-implemented Adaptive Huffman encoder — delivered as two communicating microservices.
 
@@ -133,7 +133,7 @@ Output: 62-class logits (0–9, A–Z, a–z)
 - Label smoothing=0.1, WeightedRandomSampler for class balance
 - **Result: 92.5% val accuracy on Char74K**
 
-**Why two-phase fine-tuning:**
+**Two-phase fine-tuning:**
 - Phase 1 stabilises the classifier head before the backbone is unfrozen
 - Prevents large early gradients from destroying the eMNIST-learned features
 - Phase 2 makes small targeted adjustments to the feature extractor for real font styles
