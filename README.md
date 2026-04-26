@@ -188,10 +188,12 @@ codenova/
 ├── requirements.txt              ← root common dependencies
 │
 ├── stage1_ocr/
-│   ├── service.py                ← FastAPI OCR service
-│   ├── unet_denoiser_best.pth    ← U-Net weights (download from Drive)
-│   ├── char74k_finetuned_cnn.pth ← CharCNN weights (download from Drive)
+|   |weights/
+|       ├── unet_denoiser_best.pth    ← U-Net weights (download from hugging face)
+│       |── char74k_finetuned_cnn.pth ← CharCNN weights(download from hugging face)
 │   └── requirements.txt
+│   ├── service.py 
+│   
 │
 ├── stage2/
 │   ├── app.py                    ← Flask Huffman service
@@ -225,9 +227,27 @@ codenova/
   - `unet_denoiser_best.pth`
   - `char74k_finetuned_cnn.pth`
 
-Download weights from Google Drive:
-```
-https://drive.google.com/drive/folders/[your-ocr-folder]
+## Download Weights
+
+Weights are hosted on HuggingFace:
+**https://huggingface.co/gvenkatamadhumitha/document-ocr-pipeline-weights**
+
+Download and place in `stage1_ocr/weights/`:
+- `unet_denoiser.pth`
+- `char74k_finetuned_cnn.pth`
+
+Or download via Python:
+```python
+from huggingface_hub import hf_hub_download
+
+unet_path = hf_hub_download(
+    repo_id="gvenkatamadhumitha/document-ocr-pipeline-weights",
+    filename="unet_denoiser.pth"
+)
+cnn_path = hf_hub_download(
+    repo_id="gvenkatamadhumitha/document-ocr-pipeline-weights",
+    filename="char74k_finetuned_cnn.pth"
+)
 ```
 
 ### Install dependencies
