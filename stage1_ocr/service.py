@@ -101,12 +101,11 @@ class CharCNN(nn.Module):
 # ── Load models on startup ────────────────────────────────────
 
 unet_model = UNetDenoiser().to(device)
-unet_ckpt  = torch.load("unet_denoiser.pth",
-                         map_location=device, weights_only=False)
+unet_ckpt = torch.load("weights/unet_denoiser_best.pth", map_location=device, weights_only=False)
 unet_model.load_state_dict(unet_ckpt["model_state_dict"])
 unet_model.eval()
 
-cnn_ckpt   = torch.load("char74k_finetuned_cnn.pth",
+cnn_ckpt   = torch.load("weights/char74k_finetuned_cnn.pth",
                          map_location=device, weights_only=False)
 NUM_CLASSES  = cnn_ckpt["num_classes"]
 EMNIST_CHARS = cnn_ckpt["classes"]
