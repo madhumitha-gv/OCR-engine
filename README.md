@@ -1,6 +1,6 @@
 # Neural OCR + Compression Pipeline
 
-**IU Hackathon 2026** — A full-stack pipeline that ingests a noisy scanned document, extracts its text using a custom-trained CNN, and compresses the output using a hand-implemented Adaptive Huffman encoder — delivered as two communicating microservices.
+A full-stack pipeline that ingests a noisy scanned document, extracts its text using a custom-trained CNN, and compresses the output using a Adaptive Huffman encoder — delivered as two communicating microservices.
 
 ---
 
@@ -76,12 +76,17 @@ Input (1×H×W)
 Output = clamp(input − predicted_noise, 0, 1)
 ```
 
+
 **Design choices:**
 - GroupNorm instead of BatchNorm — stable on small batch sizes at inference
 - Residual noise subtraction — network learns only the noise, not the full image
 - Bilinear upsample + 1×1 conv — smoother reconstruction than transposed convolutions
 - Loss: 0.5×MSE + 0.5×(1−SSIM) — pixel accuracy + stroke preservation
 
+**Training data:**
+- Clean images: `clean_images_grayscale/` (NoisyOffice dataset)
+- Noisy images: `simulated_noisy_images_grayscale/` (NoisyOffice dataset)
+- Weights: `unet_denoiser_best.pth`
 **Noise profiles supported:**
 
 | Profile | Preprocessing |
@@ -92,6 +97,7 @@ Output = clamp(input − predicted_noise, 0, 1)
 | Crumpled | CLAHE + sharpening |
 | Stained | CLAHE + contrast normalization |
 | All | Median → Gaussian → Bilateral |
+
 
 ### Step 2: Preprocessing + Segmentation
 
